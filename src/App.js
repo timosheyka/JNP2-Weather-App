@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext, useState } from "react";
+import "./App.css";
+import { ThemeContext } from "./theme";
+import Header from "./containers/header";
+import Menu from "./containers/menu";
+import Weather from "./containers/weather";
 
 function App() {
+  const { theme } = useContext(ThemeContext);
+  const [coordinates, setCoordinates] = useState(null);
+
+  const handleCurrentCoordinatesChange = (coords) => {
+    setCoordinates(coords);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className={`App ${theme}`}>
+      <Header/>
+      <Menu onCurrentCoordinatesChange={handleCurrentCoordinatesChange}/>
+      <Weather coordinates={coordinates}/>
     </div>
   );
 }
